@@ -20,6 +20,8 @@ class AltitudeViewController: UIViewController {
     let altitudeInFeet: Double = 0.0
     var glideRatio: Double = 0.0
     
+   
+    // Connect text fields
     @IBOutlet weak var headingTextField: UITextField!
     @IBOutlet weak var altitudeTextField: UITextField!
     
@@ -27,6 +29,8 @@ class AltitudeViewController: UIViewController {
     func addAircraftLabel() {
         aircraftLabel.text = aircraftName
     }
+    
+    //MARK: UITextFieldDelagate Section
     
     @IBAction func returnPressed(_ sender: UITextField) {
         headingTextField.resignFirstResponder()
@@ -54,6 +58,7 @@ class AltitudeViewController: UIViewController {
     }else {
     }
 }
+    // MARK: Calculation section
     
     // Calculate glide distance.
     @IBAction func calculateButton(_ sender: UIButton) {
@@ -62,6 +67,12 @@ class AltitudeViewController: UIViewController {
         print(distanceCalculation)
     }
     
+    // MARK: Navigaton Section
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "AltitudeSegue" {
+        }
+    }
 }
 
 

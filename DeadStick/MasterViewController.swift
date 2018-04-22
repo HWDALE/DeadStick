@@ -15,16 +15,14 @@ class MasterViewController: UITableViewController {
     var detailViewController: DetailViewController? = nil
     var objects = [Any]()
     
+    // Declare empty array and assign to variable.
+    var deadsticks = [DeadStick]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Split View Controller setup.
+        // Use edit button provided by the table view controller.
         navigationItem.leftBarButtonItem = editButtonItem
-        
-        if let split = splitViewController {
-            let controllers = split.viewControllers
-            detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
-        }
  
         // Select source of data and load.
         if let savedDeadSticks = DeadStick.loadDeadSticks() {
@@ -33,55 +31,25 @@ class MasterViewController: UITableViewController {
             deadsticks = DeadStick.loadSampleDeadSticks()
         }
     }
-
-    // Unwind segue from detail view controller.
-    @IBAction func unwindShowDetailSegue(segue: UIStoryboardSegue) {
-        guard segue.identifier == "saveUnwind" else { return }
-        let sourceViewController = segue.source as!
-        DetailViewController
-        
-        // Edited data passed from Detail View Controller.
-        if let deadstick = sourceViewController.deadstick {
-            if let selectedIndexPath =
-                tableView.indexPathForSelectedRow {
-                deadsticks[selectedIndexPath.row] = deadstick
-                tableView.reloadRows(at: [selectedIndexPath],
-                                     with: .none)
-                DeadStick.saveDeadSticks(deadsticks)
-                
-        // New data passed from detail view controller.
-            } else {
-                let newIndexPath = IndexPath(row: deadsticks.count,
-                section: 0)
-                deadsticks.append(deadstick)
-                tableView.insertRows(at: [newIndexPath],
-                                 with: .automatic)
-                DeadStick.saveDeadSticks(deadsticks)
-            }
-        }
-    }
-    
-    // Declare empty array and assign to variable.
-    var deadsticks = [DeadStick]()
-    
-    // Clear selection.
-    override func viewWillAppear(_ animated: Bool) {
-        clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
-        super.viewWillAppear(animated)
-    }
     
     // Dispose of any resources that can be recreated.
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    // MARK: - Master Table View data functions.
+    // MARK: - Table View data source.
+    
+    // Add number of sections.
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
     // Add number of rows.
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return deadsticks.count
     }
     
-    // Report error if problem with cell.
+    // Table view cells are reused and should be dequeued using cell identifier.
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") else
         {
@@ -93,13 +61,13 @@ class MasterViewController: UITableViewController {
         return cell
     }
     
-    // Function to edit row in table
+    // Override to support conditional editing of table view.
     override func tableView(_ tableView: UITableView, canEditRowAt
         indexPath: IndexPath) -> Bool {
         return true
     }
     
-    // Function to delete row in table
+    // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit
         editingStyle: UITableViewCellEditingStyle, forRowAt indexPath:
         IndexPath) {
@@ -119,6 +87,9 @@ class MasterViewController: UITableViewController {
         switch (segue.identifier ?? "") {
             
         case "addDetail":
+            if let index = self.tableView.indexPathForSelectedRow {
+                self.tableView.deselectRow(at: index, animated: true)
+            }
             os_log("Adding New Aircraft.", log: OSLog.default, type: .debug)
             
         case "showDetail":
@@ -126,6 +97,7 @@ class MasterViewController: UITableViewController {
             let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
             let selectedDeadStick = deadsticks[indexPath.row]
             controller.deadstick = selectedDeadStick
+            controller.navigationItem.leftBarButtonItem = nil
             }
             
         default:
@@ -133,6 +105,32 @@ class MasterViewController: UITableViewController {
         }
     }
     
-    // End class definition.
+    // MARK: Actions
+    // Unwind segue from detail view controller.
+    @IBAction func unwindShowDetailSegue(segue: UIStoryboardSegue) {
+        guard segue.identifier == "saveUnwind" else { return }
+        let sourceViewController = segue.source as!
+        DetailViewController
+        
+        // Edited data passed from Detail View Controller.
+        if let deadstick = sourceViewController.deadstick {
+            if let selectedIndexPath =
+                tableView.indexPathForSelectedRow {
+                deadsticks[selectedIndexPath.row] = deadstick
+                tableView.reloadRows(at: [selectedIndexPath],
+                                     with: .none)
+                DeadStick.saveDeadSticks(deadsticks)
+                
+                // New data passed from detail view controller.
+            } else {
+                let newIndexPath = IndexPath(row: deadsticks.count,
+                                             section: 0)
+                deadsticks.append(deadstick)
+                tableView.insertRows(at: [newIndexPath],
+                                     with: .automatic)
+                DeadStick.saveDeadSticks(deadsticks)
+            }
+        }
+    }    // End class definition.
 }
 

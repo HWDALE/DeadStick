@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="TKt-cw-fHy">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="TKt-cw-fHy">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -27,7 +27,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zVO-8w-Wx1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1545" y="-251"/>
+            <point key="canvasLocation" x="-1434" y="-258"/>
         </scene>
         <!--Master-->
         <scene sceneID="Nki-YV-4Qg">
@@ -62,7 +62,7 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
-                                    <segue destination="Rv9-M5-Iez" kind="showDetail" identifier="showDetail" id="PTP-KB-yzW"/>
+                                    <segue destination="Rv9-M5-Iez" kind="showDetail" identifier="showDetail" id="Lt9-ZT-isV"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -282,8 +282,7 @@
                     <navigationItem key="navigationItem" title="Aircraft Data" id="3YH-Kg-ntr">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="ayx-0g-qma">
                             <connections>
-                                <action selector="cancelButton:" destination="FyD-02-qWG" id="J0t-sy-kMf"/>
-                                <segue destination="ynC-x2-A1y" kind="unwind" identifier="" unwindAction="unwindShowDetailSegueWithSegue:" id="nGc-gd-XLo"/>
+                                <segue destination="ynC-x2-A1y" kind="unwind" unwindAction="unwindShowDetailSegueWithSegue:" id="dNC-Te-eGu"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="I8x-Mu-msZ">
@@ -296,7 +295,7 @@
                     <connections>
                         <outlet property="activateButton" destination="jYw-xp-9Fq" id="Q7o-gY-GDb"/>
                         <outlet property="aircraftTextField" destination="5OJ-V0-4Vv" id="0b2-T9-EQp"/>
-                        <outlet property="cancelButton" destination="ayx-0g-qma" id="KJa-GF-VfM"/>
+                        <outlet property="cancelButton" destination="ayx-0g-qma" id="8N9-Ag-aBP"/>
                         <outlet property="gRatioTextField" destination="iVn-g1-55v" id="fSR-5Y-XFT"/>
                         <outlet property="gSpeedTextField" destination="070-Jh-P4D" id="5ab-fp-33t"/>
                         <outlet property="sAltitudeTextField" destination="rEE-cy-gSh" id="4RQ-XH-s91"/>
@@ -431,6 +430,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Rv9-M5-Iez" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" id="jKi-HI-BXE"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="kVu-xm-XA5">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -496,7 +496,7 @@
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-559" y="140"/>
+            <point key="canvasLocation" x="-527" y="141"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="lKq-fI-CeW">
@@ -533,7 +533,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0d1-a5-Ofj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-559" y="-630"/>
+            <point key="canvasLocation" x="-526" y="-630"/>
         </scene>
     </scenes>
     <resources>
@@ -541,6 +541,6 @@
         <image name="Map" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="PTP-KB-yzW"/>
+        <segue reference="Lt9-ZT-isV"/>
     </inferredMetricsTieBreakers>
 </document>

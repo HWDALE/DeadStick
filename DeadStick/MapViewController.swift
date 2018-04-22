@@ -20,6 +20,8 @@ class MapViewController: UIViewController, UISearchBarDelegate {
         super.viewDidLoad()
     }
  
+    // MARK: Search Methods
+    
     @IBAction func SearchButton(_ sender: Any) {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.delegate = self
@@ -72,6 +74,7 @@ class MapViewController: UIViewController, UISearchBarDelegate {
             }
         }
     }
+    // MARK: Gesture Recognizers
     
     @IBAction func addAircraft(_ sender: UILongPressGestureRecognizer) {
         
@@ -85,10 +88,7 @@ class MapViewController: UIViewController, UISearchBarDelegate {
         self.Map.removeAnnotations(Map.annotations)
         self.Map.addAnnotation(annotation)
     }
+
+    // MARK: Circle and Polygon overlays.
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "AltitudeSegue" {
-            
-        }
-    }
 }
