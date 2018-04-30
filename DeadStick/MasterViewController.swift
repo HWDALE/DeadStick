@@ -23,7 +23,13 @@ class MasterViewController: UITableViewController {
         
         // Use edit button provided by the table view controller.
         navigationItem.leftBarButtonItem = editButtonItem
- 
+        
+        if let split = splitViewController {
+            let controllers = split.viewControllers
+            detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as?  DetailViewController
+        }
+    
+        
         // Select source of data and load.
         if let savedDeadSticks = DeadStick.loadDeadSticks() {
             deadsticks = savedDeadSticks

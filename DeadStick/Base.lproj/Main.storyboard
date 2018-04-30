@@ -157,6 +157,9 @@
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                    <connections>
+                                                        <action selector="textEditingChanged:" destination="FyD-02-qWG" eventType="editingChanged" id="SH7-oA-cfq"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -191,6 +194,9 @@
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                                    <connections>
+                                                        <action selector="textEditingChanged:" destination="FyD-02-qWG" eventType="editingChanged" id="5Vh-Lg-JLt"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -225,6 +231,9 @@
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                    <connections>
+                                                        <action selector="textEditingChanged:" destination="FyD-02-qWG" eventType="editingChanged" id="vbV-v6-q3H"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -541,6 +550,6 @@
         <image name="Map" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Lt9-ZT-isV"/>
+        <segue reference="vo7-BF-Lr1"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -37,7 +37,7 @@ class DetailViewController: UITableViewController, UITextFieldDelegate, UINaviga
             sAltitudeTextField.text = String(deadstick.sAltitude ?? 0)
             activateButton.isSelected = deadstick.activated
         }
-        updateSaveButtonState()
+        saveButton.isEnabled = false
     }
     
     // MARK: UITextFieldDelegate section.
@@ -45,9 +45,10 @@ class DetailViewController: UITableViewController, UITextFieldDelegate, UINaviga
     // Activate or deactivate aircraft button.
     @IBAction func activateButtonTapped(_ sender: UIButton) {
         activateButton.isSelected = !activateButton.isSelected
+            updateSaveButtonState()
     }
     
-    @IBAction func textEditingChanged(_ sender: Any) {
+    @IBAction func textEditingChanged(_ sender: UITextField) {
         updateSaveButtonState()
     }
     
