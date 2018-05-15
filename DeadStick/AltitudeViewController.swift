@@ -71,6 +71,9 @@ class AltitudeViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "AltitudeSegue" {
+            if let mapViewController = segue.destination as? MapViewController {
+                mapViewController.showCircle = true
+            }
         }
     }
 }

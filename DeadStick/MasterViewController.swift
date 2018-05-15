@@ -28,7 +28,6 @@ class MasterViewController: UITableViewController {
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as?  DetailViewController
         }
-    
         
         // Select source of data and load.
         if let savedDeadSticks = DeadStick.loadDeadSticks() {
@@ -44,7 +43,6 @@ class MasterViewController: UITableViewController {
     }
     
     // MARK: - Table View data source.
-    
     // Add number of sections.
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -90,21 +88,20 @@ class MasterViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         
-        switch (segue.identifier ?? "") {
+        switch(segue.identifier ?? "") {
             
         case "addDetail":
             if let index = self.tableView.indexPathForSelectedRow {
                 self.tableView.deselectRow(at: index, animated: true)
             }
             os_log("Adding New Aircraft.", log: OSLog.default, type: .debug)
-            
+        
         case "showDetail":
-            if let indexPath = tableView.indexPathForSelectedRow {
-            let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
+            let detailViewController = (segue.destination as! UINavigationController).topViewController as! DetailViewController
+            let indexPath = tableView.indexPathForSelectedRow!
             let selectedDeadStick = deadsticks[indexPath.row]
-            controller.deadstick = selectedDeadStick
-            controller.navigationItem.leftBarButtonItem = nil
-            }
+            detailViewController.deadstick = selectedDeadStick
+            detailViewController.navigationItem.leftBarButtonItem = nil
             
         default:
             fatalError("Unexpected Segue Identifier; \(String(describing: segue.identifier))")
@@ -113,7 +110,7 @@ class MasterViewController: UITableViewController {
     
     // MARK: Actions
     // Unwind segue from detail view controller.
-    @IBAction func unwindShowDetailSegue(segue: UIStoryboardSegue) {
+    @IBAction func unwindAircraftData(segue: UIStoryboardSegue) {
         guard segue.identifier == "saveUnwind" else { return }
         let sourceViewController = segue.source as!
         DetailViewController
@@ -125,6 +122,7 @@ class MasterViewController: UITableViewController {
                 deadsticks[selectedIndexPath.row] = deadstick
                 tableView.reloadRows(at: [selectedIndexPath],
                                      with: .none)
+                tableView.selectRow(at: selectedIndexPath, animated: true, scrollPosition: .none)
                 DeadStick.saveDeadSticks(deadsticks)
                 
                 // New data passed from detail view controller.
@@ -135,8 +133,10 @@ class MasterViewController: UITableViewController {
                 tableView.insertRows(at: [newIndexPath],
                                      with: .automatic)
                 DeadStick.saveDeadSticks(deadsticks)
+                tableView.selectRow(at: newIndexPath, animated: true, scrollPosition: .none)
             }
         }
-    }    // End class definition.
+    }
+    // End class definition.
 }
 

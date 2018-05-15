@@ -19,7 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         // Override point for customization after application launch
         
         let tabBarViewController = self.window!.rootViewController as! UITabBarController
-        print(tabBarViewController.viewControllers?.count ?? 0)
         var splitViewController: UISplitViewController? = nil
         for viewController in tabBarViewController.viewControllers! {
         if viewController.title == "Master" {

@@ -10,15 +10,18 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class MapViewController: UIViewController, UISearchBarDelegate {
+class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegate, CLLocationManagerDelegate {
   
     let locationManager = CLLocationManager()
     
-    @IBOutlet weak var Map: MKMapView!
+    var showCircle = false
+    
+    @IBOutlet weak var mapView: MKMapView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
+
+     }
  
     // MARK: Search Methods
     
@@ -56,8 +59,8 @@ class MapViewController: UIViewController, UISearchBarDelegate {
             }
             else
             {
-                let annotations = self.Map.annotations
-                self.Map.removeAnnotations(annotations)
+                let annotations = self.mapView.annotations
+                self.mapView.removeAnnotations(annotations)
                 
                 let latitude = response?.boundingRegion.center.latitude
                 let longitude = response?.boundingRegion.center.longitude
@@ -65,12 +68,12 @@ class MapViewController: UIViewController, UISearchBarDelegate {
                 let annotation = MKPointAnnotation()
                 annotation.title = searchBar.text
                 annotation.coordinate = CLLocationCoordinate2DMake(latitude!, longitude!)
-                self.Map.addAnnotation(annotation)
+                self.mapView.addAnnotation(annotation)
                 
                 let coordinate: CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude!, longitude!)
                 let span = MKCoordinateSpanMake(0.1, 0.1)
                 let region = MKCoordinateRegionMake(coordinate, span)
-                self.Map.setRegion(region, animated: true)
+                self.mapView.setRegion(region, animated: true)
             }
         }
     }
@@ -78,17 +81,34 @@ class MapViewController: UIViewController, UISearchBarDelegate {
     
     @IBAction func addAircraft(_ sender: UILongPressGestureRecognizer) {
         
-        let location = sender.location(in: self.Map)
-        let locCoord = self.Map.convert(location, toCoordinateFrom: self.Map)
+        let location = sender.location(in: self.mapView)
+        let locCoord = self.mapView.convert(location, toCoordinateFrom: self.mapView)
         let annotation = MKPointAnnotation()
-        
+      
         annotation.coordinate = locCoord
         annotation.title = "Aircraft"
         
-        self.Map.removeAnnotations(Map.annotations)
-        self.Map.addAnnotation(annotation)
+        self.mapView.removeAnnotations(mapView.annotations)
+        self.mapView.addAnnotation(annotation)
     }
 
     // MARK: Circle and Polygon overlays.
+    /*
+    func addRadiusCircle(locCoord: CLLocationCoordinate2D) {
+        self.mapView.delegate = self
+        let circle = MKCircle(center: locCoord, radius: 1000 as CLLocationDistance)
+        self.mapView.add(circle)
+    }
     
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        if overlay is MKCircle {
+            let circle = MKCircleRenderer(overlay: overlay)
+            circle.strokeColor = UIColor.red
+            circle.lineWidth = 1
+            return circle
+        }else {
+            return MKOverlayRenderer()
+        }
+     }
+    */
 }
