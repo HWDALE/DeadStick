@@ -24,6 +24,7 @@ class DetailViewController: UITableViewController, UITextFieldDelegate, UINaviga
     
     // Data passed from Master View Controller.
     var deadstick: DeadStick?
+    var previousSelectionPath = IndexPath(row: 0, section: 0)
     
     override func viewDidLoad() {
         super.viewDidLoad()

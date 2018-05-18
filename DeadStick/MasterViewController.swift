@@ -14,6 +14,7 @@ class MasterViewController: UITableViewController {
     
     var detailViewController: DetailViewController? = nil
     var objects = [Any]()
+    var selectedItem = IndexPath(row: 0, section: 0)
     
     // Declare empty array and assign to variable.
     var deadsticks = [DeadStick]()
@@ -83,6 +84,11 @@ class MasterViewController: UITableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedItem = indexPath
+        print(selectedItem.row)
+    }
+    
     // Mark: Master table view navigation.
     // Segue to detail view controller and pass data.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -94,6 +100,8 @@ class MasterViewController: UITableViewController {
             if let index = self.tableView.indexPathForSelectedRow {
                 self.tableView.deselectRow(at: index, animated: true)
             }
+            detailViewController?.previousSelectionPath = selectedItem
+            
             os_log("Adding New Aircraft.", log: OSLog.default, type: .debug)
         
         case "showDetail":
@@ -111,7 +119,9 @@ class MasterViewController: UITableViewController {
     // MARK: Actions
     // Unwind segue from detail view controller.
     @IBAction func unwindAircraftData(segue: UIStoryboardSegue) {
-        guard segue.identifier == "saveUnwind" else { return }
+        guard segue.identifier == "saveUnwind" else {
+            tableView.selectRow(at: selectedItem, animated: true, scrollPosition: .none)
+            return }
         let sourceViewController = segue.source as!
         DetailViewController
         
